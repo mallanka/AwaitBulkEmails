@@ -12,7 +12,18 @@ namespace AwaitBulkEmails
     {
         static void Main(string[] args)
         {
-            
+            SendEmailAsync().GetAwaiter();
+        }
+        public static async Task SendEmailAsync()
+        {
+            MailAddress from = new MailAddress("mallanka2@mail.ru");
+            MailAddress to = new MailAddress("mallanka@mail.ru");
+            MailMessage mailMessage = new MailMessage(from, to);
+            mailMessage.Subject = "subject";
+            mailMessage.Body = "test message";
+            SmtpClient smpt = new SmtpClient("smtp.yandex.ru", 25);
+            smpt.Credentials = new NetworkCredential("mallanka2@mail.ru", "********");
+            await smpt.SendMailAsync(mailMessage);
         }
     }
 }
